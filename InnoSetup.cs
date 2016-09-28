@@ -19,15 +19,15 @@ namespace InnoSetupTasks
 
             if (Output != null)
             {
-                arguments.AppendFormat("/o{0} ", OutputPath);
+                arguments.AppendFormat("/o\"{0}\" ", OutputPath);
             }
 
             if (BaseFilename != null)
             {
-                arguments.AppendFormat("/f{0} ", BaseFilename);
+                arguments.AppendFormat("/f\"{0}\" ", BaseFilename);
             }
 
-            arguments.Append(Script);
+            arguments.AppendFormat("\"{0}\"", Script);
 
             return arguments.ToString();
         }
@@ -96,7 +96,7 @@ namespace InnoSetupTasks
         public DirectoryInfo OutputPath { get; set; }
 
         [TaskAttribute("basefilename", Required = false)]
-        public FileInfo BaseFilename { get; set; }
+        public string BaseFilename { get; set; }
     }
 
 }
