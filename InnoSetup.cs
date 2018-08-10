@@ -27,6 +27,15 @@ namespace InnoSetupTasks
                 arguments.AppendFormat("/f\"{0}\" ", BaseFilename);
             }
 
+            if (string.Equals(Quiet, "true", StringComparison.CurrentCultureIgnoreCase))
+            {
+                arguments.Append("/Q ");
+            }
+            else if (string.Equals(Quiet, "progress", StringComparison.CurrentCultureIgnoreCase))
+            {
+                arguments.Append("/Qp ");
+            }
+
             arguments.AppendFormat("\"{0}\"", Script);
 
             return arguments.ToString();
@@ -97,6 +106,14 @@ namespace InnoSetupTasks
 
         [TaskAttribute("basefilename", Required = false)]
         public string BaseFilename { get; set; }
+
+        [TaskAttribute("quiet", Required = false),
+         StringValidator(
+            AllowEmpty = true,
+            Expression = "(?i:true|false|progress)",
+            ExpressionErrorMessage = "Must be an empty string or one of 'true', 'false' or 'progress'"
+         )]
+        public string Quiet { get; set; }
     }
 
 }
